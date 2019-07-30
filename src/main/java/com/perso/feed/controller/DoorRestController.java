@@ -47,18 +47,18 @@ public class DoorRestController {
 		}
 		
 		if( motor1Pin1 == null ) {
-			motor1Pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "motor1Pin1", PinState.HIGH);
+			motor1Pin1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_25, "motor1Pin1", PinState.LOW);
 			motor1Pin1.setShutdownOptions(true, PinState.LOW);
 		}
 		
 		if( motor1Pin2 == null ) {
-			motor1Pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "motor1Pin2", PinState.HIGH);
+			motor1Pin2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_24, "motor1Pin2", PinState.LOW);
 			motor1Pin2.setShutdownOptions(true, PinState.LOW);
 		}
 		
 		ledPin.high();
 		motor1Pin1.high();
-		log.info("--> GPIO state should be: ON");
+		log.info("--> GPIO state should be: ON ( " + ledPin.isHigh() + " )");
 
 		
 		
@@ -72,7 +72,7 @@ public class DoorRestController {
         motor1Pin1.low();
         log.info("--> GPIO state should be: OFF");
         
-        gpio.shutdown();
+        //gpio.shutdown();
 		
         
         log.info("End test successfully");
