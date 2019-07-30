@@ -1,8 +1,12 @@
 package com.perso.feed.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perso.feed.model.Drawer;
+import com.perso.feed.service.BoxService;
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalOutput;
@@ -16,18 +20,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DoorRestController {
 
-	@RequestMapping("/open")
-	public String openDoor() {
+	@Autowired
+	private BoxService boxService;
+	
+	
+	@RequestMapping("/{number}/open")
+	public Drawer openDoor( @PathVariable("number") int number ) throws InterruptedException {
 		log.info( "Open the door" );
-		return "OPEN";
+		return boxService.openDrawer(number);
 	}
 
-	@RequestMapping("/close")
-	public String closeDoor() {
+	@RequestMapping("/{number}/close")
+	public Drawer closeDoor(@PathVariable("number") int number) throws InterruptedException {
 		log.info( "Close the door" );
-		return "CLOSE";
+		return boxService.closeDrawer(number);
 	}
-	
 	
 	@RequestMapping("/test")
 	public String testDoor() {
